@@ -1,0 +1,73 @@
+1. Basic Data Retrieval:
+
+Retrieve all columns for all rows in the table:
+
+SELECT * FROM [Hospitality Database].[dbo].[dim_hotels]
+
+
+2.Filtering Data:
+
+Retrieve hotels located in a specific city:
+
+SELECT * FROM [Hospitality Database].[dbo].[dim_hotels]
+WHERE city = 'YourCity';
+
+3. Aggregate Functions:
+
+Count the number of hotels in each category:
+
+SELECT category, COUNT(*) AS total_hotels
+FROM [Hospitality Database].[dbo].[dim_hotels]
+GROUP BY category;
+
+4. Sorting Data:
+
+Retrieve hotels sorted by property name in ascending order:
+
+SELECT * FROM FROM [Hospitality Database].[dbo].[dim_hotels]
+ ORDER BY property_name ASC;
+
+5. Joins:
+
+If you have another table fact_bookings containing booking information with a property_id column, you can join it with dim_hotels to get bookings along with hotel details:
+
+SELECT b.*, h.property_name, h.city
+FROM fact_bookings b
+INNER JOIN dim_hotels h ON b.property_id = h.property_id;
+
+6. Subqueries:
+
+Retrieve hotels that have more than 50 bookings:
+
+SELECT *
+FROM FROM [Hospitality Database].[dbo].[dim_hotels]
+WHERE property_id IN (
+    SELECT property_id
+    FROM fact_bookings
+    GROUP BY property_id
+    HAVING COUNT(*) > 50
+);
+
+7. Conditional Logic:
+
+Retrieve hotels with a category of 'Luxury' and located in a specific city:
+
+SELECT *
+FROM FROM [Hospitality Database].[dbo].[dim_hotels]
+WHERE category = 'Luxury'
+AND city = 'YourCity';
+
+8. Data Modification:
+
+Update the category of a specific hotel:
+
+UPDATE dim_hotels
+SET category = 'NewCategory'
+WHERE property_id = 'YourPropertyID';
+Data Removal:
+
+Delete hotels that are not in use (assuming no bookings are present):
+
+DELETE FROM dim_hotels WHERE property_id NOT IN (SELECT DISTINCT property_id FROM fact_bookings);
+
+These queries should cover a range of SQL concepts and help you explore your dim_hotels table effectively in MSSQL Server. Adjust them according to your specific requirements and schema.

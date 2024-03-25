@@ -1,0 +1,67 @@
+1. Count the number of records in the table:
+
+SELECT COUNT(*) AS total_records
+FROM [Hospitality Database].[dbo].[fact_aggregated_bookings]
+
+
+2. Display the first 10 records in the table:
+
+SELECT TOP 10 *
+FROM [Hospitality Database].[dbo].[fact_aggregated_bookings]
+
+
+3. Find the distinct room categories available:
+
+SELECT DISTINCT room_category
+FROM [Hospitality Database].[dbo].[fact_aggregated_bookings]
+
+
+4. Calculate the total number of successful bookings:
+
+SELECT SUM(successful_bookings) AS total_successful_bookings
+FROM [Hospitality Database].[dbo].[fact_aggregated_bookings]
+
+
+5. Find the total capacity of all properties:
+
+SELECT SUM(capacity) AS total_capacity
+FROM [Hospitality Database].[dbo].[fact_aggregated_bookings]
+
+
+6. List properties with the highest and lowest capacity:
+
+SELECT TOP 1 property_id, capacity
+FROM [Hospitality Database].[dbo].[fact_aggregated_bookings]
+
+ORDER BY capacity DESC; -- Highest capacity
+
+SELECT TOP 1 property_id, capacity
+FROM [Hospitality Database].[dbo].[fact_aggregated_bookings]
+ORDER BY capacity ASC; -- Lowest capacity
+
+7. Calculate the average capacity per room category:
+
+SELECT room_category, AVG(capacity) AS average_capacity
+FROM [Hospitality Database].[dbo].[fact_aggregated_bookings]
+GROUP BY room_category;
+
+9. Find the date with the highest number of successful bookings:
+
+SELECT check_in_date, MAX(successful_bookings) AS max_successful_bookings
+FROM [Hospitality Database].[dbo].[fact_aggregated_bookings];
+
+
+10. Find the date with the lowest number of successful bookings:
+
+SELECT check_in_date, MIN(successful_bookings) AS min_successful_bookings
+FROM [Hospitality Database].[dbo].[fact_aggregated_bookings]
+
+
+11. Calculate the success rate for each room category:
+
+SELECT room_category, 
+       SUM(successful_bookings) * 100.0 / SUM(capacity) AS success_rate_percentage
+FROM [Hospitality Database].[dbo].[fact_aggregated_bookings]
+GROUP BY room_category;
+
+These queries should help you get started with exploring your dim_date table data using various SQL concepts in MSSQL Server. Adjust them as needed based on your specific analysis requirements

@@ -1,0 +1,70 @@
+1. Total number of bookings:
+
+SELECT COUNT(*) AS total_bookings
+FROM [Hospitality Database].[dbo].[fact_bookings];
+
+
+2. Total revenue generated:
+
+SELECT SUM(revenue_generated) AS total_revenue
+FROM [Hospitality Database].[dbo].[fact_bookings];
+
+
+3. Average revenue per booking:
+
+SELECT AVG(revenue_generated) AS avg_revenue_per_booking
+FROM [Hospitality Database].[dbo].[fact_bookings];
+
+
+4. Total revenue realized:
+
+SELECT SUM(revenue_realized) AS total_revenue_realized
+FROM [Hospitality Database].[dbo].[fact_bookings];
+
+
+5. Average ratings given:
+
+SELECT AVG(ratings_given) AS avg_ratings_given
+FROM [Hospitality Database].[dbo].[fact_bookings];
+
+
+6. Number of bookings per platform:
+
+SELECT booking_platform, COUNT(*) AS total_bookings
+FROM [Hospitality Database].[dbo].[fact_bookings]
+GROUP BY booking_platform;
+
+7. Revenue generated per room category:
+
+SELECT room_category, SUM(revenue_generated) AS total_revenue
+FROM [Hospitality Database].[dbo].[fact_bookings]
+GROUP BY room_category;
+
+8. Number of bookings and revenue generated per month:
+
+SELECT 
+    MONTH(booking_date) AS booking_month,
+    COUNT(*) AS total_bookings,
+    SUM(revenue_generated) AS total_revenue
+FROM [Hospitality Database].[dbo].[fact_bookings]
+GROUP BY MONTH(booking_date);
+
+9. Number of bookings and revenue generated per property:
+
+SELECT 
+    property_id,
+    COUNT(*) AS total_bookings,
+    SUM(revenue_generated) AS total_revenue
+FROM [Hospitality Database].[dbo].[fact_bookings]
+GROUP BY property_id;
+
+10. Number of bookings and revenue realized per property:
+
+SELECT 
+    property_id,
+    COUNT(*) AS total_bookings,
+    SUM(revenue_realized) AS total_revenue_realized
+FROM [Hospitality Database].[dbo].[fact_bookings]
+GROUP BY property_id;
+
+These queries should provide you with insights into your booking data, covering aspects such as total bookings, revenue, ratings, bookings per platform, per room category, per month, and per property.

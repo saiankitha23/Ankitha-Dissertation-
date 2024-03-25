@@ -1,0 +1,75 @@
+
+1. Viewing sample data:
+
+SELECT TOP 10 *
+FROM FROM [Hospitality Database].[dbo].[dim_date];
+
+2. Counting total rows:
+
+SELECT COUNT(*) AS total_rows
+FROM FROM [Hospitality Database].[dbo].[dim_date];
+
+3. Checking for duplicates:
+
+SELECT 'Duplicates Exist' AS status
+WHERE EXISTS (
+    SELECT mmm_yy, COUNT(*)
+    FROM [Hospitality Database].[dbo].[dim_date]
+    GROUP BY mmm_yy
+    HAVING COUNT(*) > 1
+);
+
+4. Finding the earliest and latest date:
+
+SELECT MIN(date) AS earliest_date, MAX(date) AS latest_date
+FROM [Hospitality Database].[dbo].[dim_date]
+
+
+5. Finding the number of unique months and years:
+
+SELECT COUNT(DISTINCT mmm_yy) AS unique_month_years
+FROM [Hospitality Database].[dbo].[dim_date]
+
+
+6. Aggregating by week number:
+
+SELECT week_no, COUNT(*) AS num_dates
+FROM [Hospitality Database].[dbo].[dim_date]
+GROUP BY week_no
+ORDER BY week_no;
+
+7. Filtering by day type:
+
+SELECT day_type, COUNT(*) AS num_days
+FROM [Hospitality Database].[dbo].[dim_date]
+GROUP BY day_type;
+
+8. Finding missing dates:
+
+WITH AllDates AS (
+    SELECT MIN(date) AS min_date, MAX(date) AS max_date FROM [Hospitality Database].[dbo].[dim_date]
+)
+SELECT DATEADD(day, number, min_date) AS missing_date
+FROM AllDates
+JOIN master..spt_values ON DATEADD(day, number, min_date) <= max_date
+WHERE type = 'P'
+    AND NOT EXISTS (
+         SELECT 1
+        FROM [Hospitality Database].[dbo].[dim_date]
+        WHERE dim_date.date = DATEADD(day, number, min_date)
+    );
+
+
+9. Calculating average days between dates:
+
+SELECT AVG(DATEDIFF(day, date, LEAD(date, 1) OVER (ORDER BY date))) AS avg_days_between_dates
+FROM FROM [Hospitality Database].[dbo].[dim_date];
+
+
+10 . Identifying weekends:
+
+SELECT COUNT(*) AS num_weekends
+FROM [Hospitality Database].[dbo].[dim_date]
+WHERE DAYNAME(date) IN ('Saturday', 'Sunday');
+
+These queries should help you get started with exploring and analyzing your dim_date table in MSSQL Server, covering various SQL concepts like aggregation, filtering, window functions, date functions, and more. Adjust them as needed based on your specific analysis requirements
